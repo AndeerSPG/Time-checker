@@ -1,0 +1,54 @@
+Leer los argumentos de línea de comandos (nb_tests, min_time, max_time, programa, [argumentos])
+
+Si el número de argumentos es menor que 5, imprimir un mensaje de error y salir con un código de error.
+De lo contrario:
+
+    Configurar variables:
+        nb_tests: número de pruebas a realizar
+        min_time: tiempo mínimo de ejecución
+        max_time: tiempo máximo de ejecución
+        programa: programa a ejecutar
+        argumentos: argumentos para el programa
+        too_fast_counter: contador de ejecuciones demasiado rápidas
+        too_slow_counter: contador de ejecuciones demasiado lentas
+        in_time_counter: contador de ejecuciones a tiempo
+        total_time: tiempo total de ejecución de todas las pruebas
+
+    Para cada prueba en nb_tests:
+        Imprimir el número de prueba.
+        Tomar el tiempo actual.
+
+        Para i desde 1 hasta 3:
+            Si i es 1:
+                Crear un proceso hijo para ejecutar un reloj que espera min_time segundos.
+            Si i es 2:
+                Crear un proceso hijo para ejecutar un reloj que espera max_time segundos.
+            Si i es 3:
+                Crear un proceso hijo para ejecutar el programa con los argumentos especificados.
+
+            Si el proceso hijo se creó con éxito:
+                Esperar a que el proceso hijo termine.
+
+                Si i es igual a 3 y el proceso hijo terminó:
+                    Si el proceso hijo fue el programa:
+                        Incrementar too_fast_counter.
+                        Detener los otros procesos.
+                    Si el proceso hijo fue el reloj min_time:
+                        Esperar al reloj max_time.
+                        Si el proceso hijo fue el programa:
+                            Si el tiempo de ejecución es menor que min_time:
+                                Incrementar too_fast_counter.
+                            Si el tiempo de ejecución está entre min_time y max_time:
+                                Incrementar in_time_counter.
+                            Si el tiempo de ejecución es mayor que max_time:
+                                Incrementar too_slow_counter.
+                        Si el proceso hijo fue el reloj max_time:
+                            Mostrar un mensaje de error y salir.
+
+        Calcular el tiempo de ejecución de la prueba y agregarlo a total_time.
+
+    Mostrar los resultados:
+        Mostrar el número de ejecuciones a tiempo, demasiado rápido y demasiado lento.
+        Mostrar el tiempo total de ejecución de todas las pruebas.
+
+    Salir con un código de éxito.
